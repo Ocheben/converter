@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<!--
+	Loan Calculator
+	...
+-->
+<html>
+	<head>
+		<title>Currency Converter</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body class="is-loading-0 is-loading-1 home">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Home -->
+					<article id="home" class="panel special">
+						
+						<div class="content">
+							<div class="inner">
+								<header>
+									<h1>Currency Converter</h1>
+									<p style="text-align: left; text-transform:none"></p>
+								</header>
+								<form method="post" action="#">
+									<div class="field half first">
+										<label for="name">From</label>
+										<div class="select-wrapper">
+												<select name="demo-category" id="select" >
+                                                    <option></option>
+												</select>
+											</div>
+									</div>
+									<div class="field half">
+											<label for="demo-category">To</label>
+											<div class="select-wrapper">
+												<select name="demo-category" id="select2">
+                                                    <option></option>
+												</select>
+											</div>
+										</div>
+									<div class="field half first">
+										<label for="message">Amount</label>
+										<input id="years" onchange="calculate();" type="text">
+									</div>
+                                    <div class="field half">
+									<ul class="actions" style="padding-top: 2.1em">
+										<li><a href="#work" class="button submit">Convert</a></li>
+									</ul>
+                                    </div>
+								</form>
+                                
+                                
+                                
+								
+							</div>
+						</div>
+					</article>
+
+				<!-- Work -->
+					<article id="work" class="panel secondary">
+						<div class="content">
+							<ul class="actions spinX">
+								<li><a href="#home" class="button small back">Back</a></li>
+							</ul>
+							<div class="inner">
+								<header>
+									<h2>Result</h2>
+									<p>Here are your results</p>
+								</header>
+								<p><tr><td>Monthly payment:</td>
+	  <td>&#8358;<span class="output" id="payment"></span></td></tr></p>
+								<p><tr><td>Total payment:</td>
+	  <td>&#8358;<span class="output" id="total"></span></td></tr></p>
+                                <p><tr><td>Total interest:</td>
+	  <td>&#8358;<span class="output" id="totalinterest"></span></td></tr></p>
+                                <ul class="actions">
+										<li><a href="#contact" class="button submit">Request Loan</a></li>
+									</ul>
+							</div>
+						</div>
+					</article>
+
+				
+				<!-- Contact -->
+					<article id="contact" class="panel secondary">
+						<div class="image">
+							<img src="images/pic04.jpg" alt="" data-position="bottom center" />
+						</div>
+						<div class="content">
+							<ul class="actions spinX">
+								<li><a href="#home" class="button small back">Back</a></li>
+							</ul>
+							<div class="inner">
+								<header>
+									<h2>Request Loan</h2>
+								</header>
+								<form method="post" action="#">
+									<div class="field half first">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field half">
+										<label for="email">Email</label>
+										<input type="text" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Amount Required</label>
+										<textarea name="message" id="message"></textarea>
+									</div>
+									<ul class="actions">
+										<li><a href="" class="button submit">Request Loan</a></li>
+									</ul>
+								</form>
+							</div>
+						</div>
+					</article>
+
+				
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; Loan Calculator</p>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+        <script src="idb.js"></script>
+<script src="idbi.js"></script>
+        <script>
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker
+           .register('sw.js')
+           .then(function() { console.log("Service Worker Registered"); });
+}
+</script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+            <script src="assets/js/index.js"></script>
+
+	</body>
+</html>

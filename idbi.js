@@ -1,6 +1,6 @@
 
 
-
+//Fetch Currencies
 const apiURL = `https://free.currencyconverterapi.com/api/v5/currencies`;   
 let countriesCurrencies;
 const dbPromise = idb.open('countries-currencies', 1, upgradeDB => {
@@ -8,13 +8,14 @@ const dbPromise = idb.open('countries-currencies', 1, upgradeDB => {
   switch (upgradeDB.oldVersion) {
     case 0:
       upgradeDB.createObjectStore('objs', {keyPath: 'id'});
+      upgradeDB.createObjectStore('rates', {keyPath: 'id'});
   }
 });
 fetch(apiURL)
-  .then(function(response) {
+  .then( response => {
   return response.json();
 })
-  .then(function(currencies) {
+  .then(currencies => {
   dbPromise.then(db => {
     if(!db) return;
     countriesCurrencies = [currencies.results];
@@ -30,6 +31,7 @@ fetch(apiURL)
   });
 });
 
+//Append Currencies to Select
 dbPromise.then(db => {
   return db.transaction('objs')
     .objectStore('objs').getAll();
@@ -48,5 +50,56 @@ dbPromise.then(db => {
         console.log(results);
     });
 
+
+
+
+//Fetch Currencies
+
+const curr = currency => {
+    let e = document.getElementById('select');
+    let sel = e.options[e.selectedIndex].value;
+    let e2 = document.getElementById('select2');
+    let sel2 = e2.options[e2.selectedIndex].value;
+    let amounts = document.getElementById("amount").value;
+    let query = `${sel}_${sel2}`;
+    console.log(sel2);
+    console.log(sel);
+    const rateURL = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`; 
+    let newrates;
+fetch(rateURL)
+  .then( response => {
+  return response.json();
+})
+  .then(data => {
+    data.id= `${query}`;
+    newrates = data;
+    let rate = newrates[query];
+    conversion = amounts * rate;
+    console.log(conversion);
+    document.getElementById('answer').innerHTML = `Amount: ${conversion}`;
+    
+  dbPromise.then(db => {  
+    if(!db) return;
+    const tx = db.transaction('rates', 'readwrite');
+    const store = tx.objectStore('rates');
+    store.put(newrates);
+    return tx.complete;  
+  });
+    
+}).catch(oldrate =>{
+    dbPromise.then(db => {
+  return db.transaction('rates')
+    .objectStore('rates').getAll(query);
+}).then(results =>{
+        let rate = results[0][query];
+        conversion = amounts * rate;
+        console.log(conversion); 
+        document.getElementById('answer').innerHTML = `Amount: ${conversion}`;
+    })
+});
+    }
+
+
+    
 
 

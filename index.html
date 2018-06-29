@@ -28,7 +28,7 @@
 									<h1>Currency Converter</h1>
 									<p style="text-align: left; text-transform:none"></p>
 								</header>
-								<form method="post" action="#">
+                                <div id="form">
 									<div class="field half first">
 										<label for="name">From</label>
 										<div class="select-wrapper">
@@ -47,18 +47,18 @@
 										</div>
 									<div class="field half first">
 										<label for="message">Amount</label>
-										<input id="years" onchange="calculate();" type="text">
+										<input id="amount" type="text" onchange="curr();">
 									</div>
                                     <div class="field half">
 									<ul class="actions" style="padding-top: 2.1em">
-										<li><a href="#work" class="button submit">Convert</a></li>
+										<li><a  class="button" onclick="curr();">Convert</a></li>
 									</ul>
                                     </div>
-								</form>
+                                    <h4><span id="answer"></span></h4>
                                 
                                 
                                 
-								
+                                </div>
 							</div>
 						</div>
 					</article>
@@ -146,7 +146,6 @@ if('serviceWorker' in navigator) {
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-            <script src="assets/js/index.js"></script>
 
 	</body>
 </html>

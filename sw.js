@@ -1,6 +1,6 @@
-self.addEventListener('install', function(e) {
+self.addEventListener('install', e => {
  e.waitUntil(
-   caches.open('assets').then(function(cache) {
+   caches.open('assets').then(cache => {
      return cache.addAll([
         '/',
         '/index.html',
@@ -16,13 +16,12 @@ self.addEventListener('install', function(e) {
  );
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', event => {
 
-console.log(event.request.url);
 
 event.respondWith(
 
-caches.match(event.request).then(function(response) {
+caches.match(event.request).then(response => {
 
 return response || fetch(event.request);
 

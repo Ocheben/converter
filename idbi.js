@@ -1,6 +1,6 @@
 
 
-//Fetch Currencies
+//Fetch Currencies and Display in Select Dropdown
 const apiURL = `https://free.currencyconverterapi.com/api/v5/countries`;   
 let countriesCurrencies;
 const dbPromise = idb.open('countries-currencies', 1, upgradeDB => {
@@ -22,13 +22,12 @@ fetch(apiURL)
                 let opt2 = document.createElement('option');
                 opt.value = currencies[currency][id]["currencyId"];
                 opt.text = `${currencies[currency][id]["currencyName"]}  (${currencies[currency][id]["currencyId"]})`;
-                
-                
                 opt2 = opt.cloneNode(true);
                 select.add(opt);
                 select2.add(opt2);
             }
         }
+    //Store Currencies in Indexed DB
   dbPromise.then(db => {
     if(!db) return;
     countriesCurrencies = [currencies.results];
@@ -43,7 +42,9 @@ fetch(apiURL)
     });
     return tx.complete;
   });
-}).catch(storedcurrencies =>{
+})
+    //Fetch Currencies from IndexedDB and Display in Select Dropdown when Offline
+    .catch(storedcurrencies =>{
     dbPromise.then(db => {
   return db.transaction('objs')
     .objectStore('objs').getAll();
@@ -59,24 +60,18 @@ fetch(apiURL)
             select2.add(opt2);
             
         });
-        console.log(results);
     });
 });
 
-//Append Currencies to Select
 
 
 
-
-
-//Fetch and Store rates Rates
 
 const curr = currency => {
     // Change background for every conversion
     const body = document.body;
     const colours = ['red', 'orange', 'yellow', 'green', 'blue'];
     const colour = colours[Math.floor(Math.random() * colours.length)];
-    console.log(colour);
     body.className = colour;
     
     //Get selectd Currency
@@ -86,11 +81,11 @@ const curr = currency => {
     let sel2 = e2.options[e2.selectedIndex].value;
     let amounts = document.getElementById("amount").value;
     let query = `${sel}_${sel2}`;
-    console.log(query);
-    console.log(sel2);
-    console.log(sel);
+    console.log(`Converting from ${sel}`);
+    console.log(`Converting to ${sel2}`);
     const rateURL = `https://free.currencyconverterapi.com/api/v5/convert?q=${query}&compact=ultra`; 
-    let newrates;
+    
+    //Fetch Exchange Rates from API, Store in IndexedDB and Multiply by amount
 fetch(rateURL)
   .then( response => {
   return response.json();
@@ -101,7 +96,7 @@ fetch(rateURL)
     let rate = newrates[query];
     let conversion = amounts * rate;
     let conversioni = Math.round(conversion * 100) / 100
-    console.log(conversion);
+    console.log(`Amount: ${conversioni}`);
     document.getElementById('answer').innerHTML = `Amount: ${conversioni}`;
     
   dbPromise.then(db => {  
@@ -112,7 +107,9 @@ fetch(rateURL)
     return tx.complete;  
   });
     
-}).catch(storedrate =>{
+})
+    // Fetch Exchange Rates from IndexedDB and Multiply by amount when Offline
+    .catch(storedrate =>{
     dbPromise.then(db => {
   return db.transaction('rates')
     .objectStore('rates').getAll(query);
@@ -120,7 +117,7 @@ fetch(rateURL)
         let rate = results[0][query];
         let conversion = amounts * rate;
         let conversioni = Math.round(conversion * 100) / 100;
-        console.log(conversion); 
+        console.log(`Amount: ${conversioni}`); 
         document.getElementById('answer').innerHTML = `Amount: ${conversioni}`;
     })
 });
